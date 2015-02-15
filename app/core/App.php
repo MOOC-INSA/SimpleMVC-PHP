@@ -21,10 +21,12 @@ class App
 		{
 			if(method_exists($this->controller, $url[1]))
 			{
-				echo 'OK';
-
+				$this->method = $url[1];
+				unset($url[1]);
 			}
 		}
+		$this->params = $url ? array_values($url) : [];
+		call_user_func_array([$this->controller, $this->method], $this->params);
 	}
 	public function parseUrl()
 	{
