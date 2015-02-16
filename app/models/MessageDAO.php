@@ -3,6 +3,7 @@ class MessageDAO extends DAO
 {
 	public function __construct()
 	{
+		require_once 'MessageVO.php';
 		$db = Db::init();
 		parent::__construct($db,"messages","id");
 	}
@@ -36,19 +37,26 @@ class MessageDAO extends DAO
 	}
 	public function findAll()
 	{
-		$arrayResult = parent::findAll();
-		$i = 0;
-		foreach($arrayResult as $entry)
+		$messages = null;
+		if($arrayResult = parent::findAll())
 		{
-			echo "'<br> entry ".$i.'<br>';
-			$i++;
-			$j = 0;
-			foreach($entry as $value)
+			$messages = array();
+			foreach($arrayResult as $entry)
 			{
-				$j++;
-				echo '<br> value '.$j.' : '.$value.'<br>';
+				$message = new MessageVO($entry['username'],$entry['content'],$entry['username']);
+				array_push($messages, $message);
 			}
 		}
+		return $messages;
+	}
+	public function findById($id)
+	{
+		$message = null;
+		if($retFromDAO = parent::findById($id))
+		{
+			$message = new MessageVO($retFromDAO['username'],$retFromDAO['content'],$retFromDAO['room']);
+		}
+		return $message;
 	}
 
 }

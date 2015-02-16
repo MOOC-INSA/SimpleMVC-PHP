@@ -37,9 +37,13 @@ class Home extends Controller
 	}
 	public function findAll()
 	{
-		$this->messageDAO->findAll();
-		echo '<br>';
-		//$this->view('home/allMessages', );
+		$messages = $this->messageDAO->findAll();
+		$this->view('home/allMessages', $messages);
+	}
+	public function findById($id)
+	{
+		$message = $this->messageDAO->findById($id);
+		$this->view('home/oneMessage', array($message));
 	}
 
 }

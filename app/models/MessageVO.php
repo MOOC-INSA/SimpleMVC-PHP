@@ -1,6 +1,6 @@
 <?php
 
-class MessageVO
+class MessageVO extends VO
 {
 	private $_username;
 	private $_content;
